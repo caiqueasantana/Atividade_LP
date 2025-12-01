@@ -34,4 +34,20 @@ public class ProdutosService {
         //deleta produto pelo Id
         repository.deleteById(id);
     }
+
+
+    //este metodo atualiza as informações do produto pelo id
+    //Produto.builder constroi um obj produto
+    //primeiro ele verifica se o atributo é nulo e caso não seja, ele mantém o que foi passado
+    //caso ele seja nulo, ele coloca o id que foi passado acima "produtoEntity"
+    public void updateById (Integer id, Produto produto){
+        Produto produtoEntity = findById(id);
+
+        Produto produtoUpdate = Produto.builder()
+                .id(produto.getId() != null ? produto.getId() : produtoEntity.getId())
+                .nomeProduto(produto.getNomeProduto() != null ? produto.getNomeProduto() : produtoEntity.getNomeProduto())
+                .preco(produto.getPreco() != null ? produto.getPreco() : produtoEntity.getPreco())
+                .build();
+        repository.saveAndFlush(produtoUpdate);
+    }
 }
